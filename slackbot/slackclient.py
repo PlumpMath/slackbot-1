@@ -142,7 +142,7 @@ class SlackClient(object):
 
     def send_message(self, channelish, message, attachments=None, as_user=True):
         channel = self._channelify(channelish)
-        self.webapi.chat.post_message(
+        response = self.webapi.chat.post_message(
                 channel,
                 message,
                 username=self.login_data['self']['name'],
@@ -151,6 +151,7 @@ class SlackClient(object):
                 attachments=attachments,
                 as_user=as_user)
         self._last_action = time.time()
+        return response
 
     def get_channel(self, channel_id):
         return Channel(self, self.channels[channel_id])
